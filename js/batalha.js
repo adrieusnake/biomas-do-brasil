@@ -366,12 +366,31 @@ const Batalha = {
     this.abrirSubmenu(Estado.itens.map((id, i) => ({
       rotulo: ITENS[id].nome,
       acao: () => {
+        if (ITENS[id].especial === 'chefe') { this.usarCocar(i); return; }
         Estado.itens.splice(i, 1); salvar();
         this.pv = Math.min(this.pvMax, this.pv + ITENS[id].cura);
         Som.cura();
         this.mostrar([ITENS[id].usar], () => this.atacar());
       }
     })));
+  },
+
+  // Cocar dos Guardiões: só diante de um chefe. A fúria vai a zero de uma vez.
+  usarCocar(i) {
+    if (!this.def.chefe) {
+      this.mostrar(['* Você pensa em mostrar o cocar...', '* Mas o Kauã disse para guardá-lo para um grande desafio: um CHEFE.'], () => this.abrirItens());
+      return;
+    }
+    Estado.itens.splice(i, 1); Estado.cocar = 'usado'; salvar();
+    this.furia = 0;
+    this.faseAtual = this.fases().length; this.fase2 = this.faseAtual > 0;
+    this.tremor = 0.6;
+    this.mostrar([
+      { texto: '* Você ergue o COCAR DOS GUARDIÕES.', som: 'pista' },
+      '* Os guardiões da floresta aparecem ao seu lado: indígenas, ribeirinhos, brigadistas, cientistas... e todos os animais que você ajudou!',
+      { fala: this.def.falaCocar || 'Tanta gente unida... Tá bom, eu paro!' },
+      '* A fúria do chefe foi a ZERO! Agora é só POUPAR.'
+    ], () => this.irMenu(true));
   },
 
   atacar() {

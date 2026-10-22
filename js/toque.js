@@ -48,6 +48,11 @@ const Toque = {
     const { x, y } = this.noCanvas(e);
     if (Jogo.modo === 'batalha') { Batalha.toque(x, y, tipo); return; }
     if (Jogo.modo === 'final') { if (tipo === 'down') Input.pulso('ok'); return; }
+    if (Jogo.modo === 'trilha') {
+      if (tipo !== 'down') return;
+      if (Dialogo.ativo) Dialogo.toque(x, y); else Input.pulso('ok');   // tocar na tela = pular
+      return;
+    }
     if (tipo !== 'down') return;
     if (Dialogo.ativo) { Dialogo.toque(x, y); return; }
     const tx = Math.floor(x / T), ty = Math.floor(y / T);

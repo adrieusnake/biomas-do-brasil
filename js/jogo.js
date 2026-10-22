@@ -88,6 +88,7 @@ const Jogo = {
       return;
     }
     if (this.modo === 'batalha') { Batalha.atualizar(dt); return; }
+    if (this.modo === 'trilha') { if (Dialogo.ativo) Dialogo.atualizar(dt); else Trilha.atualizar(dt); return; }
     if (this.modo === 'final') {
       if (Input.bateu('ok') && agora - this.finalDesde > 1.5) { this.modo = 'mundo'; Som.ok(); document.body.classList.remove('em-batalha'); }
       return;
@@ -102,6 +103,7 @@ const Jogo = {
     if (this.modo === 'batalha') Batalha.desenhar(ctx, t);
     else if (this.modo === 'transicao') this.desenharTransicao(t);
     else if (this.modo === 'final') this.desenharFinal(t);
+    else if (this.modo === 'trilha') { Trilha.desenhar(t); Dialogo.desenhar(ctx, t); }
     else {
       ctx.fillStyle = BIOMAS[Mundo.bioma].ceu; ctx.fillRect(0, 0, W, H);
       Mundo.desenhar(ctx, t);
@@ -157,6 +159,8 @@ const Jogo = {
     const naFrente = e && e.x === j.x + fx && e.y === j.y + fy;
     if (Mundo.compNaFrente() && !naFrente) { this.falarComp(); return; }
     if (!e) {
+      const bicho = Mundo.obstaculos.find(o => o.x === j.x + fx && o.y === j.y + fy && o.tipo === 'fauna');
+      if (bicho && bicho.bicho === 'boto') { this.falarBoto(); return; }
       const fala = Mundo.falaEm(j.x + fx, j.y + fy);
       if (fala) Dialogo.abrir(fala);
       return;
@@ -177,6 +181,26 @@ const Jogo = {
       case 'veiculo': Dialogo.abrir(e.falas); break;
       case 'fogo': Dialogo.abrir(['(O fogo está forte demais. Melhor não chegar perto!)']); break;
     }
+  },
+
+  // O boto convida para a fase secreta.
+  falarBoto() {
+    Dialogo.abrir([
+      ...FALAS_AMAZONIA.boto,
+      '(O boto dá um salto e aponta o focinho para o rio... Parece querer que você o siga!)',
+      { texto: 'Seguir o boto?', opcoes: ['Sim', 'Não'], aoEscolher: i => { if (i === 0) this.entrarTrilha(); } }
+    ]);
+  },
+
+  entrarTrilha() {
+    Som.alerta();
+    this.fade(() => {
+      this.modo = 'trilha';
+      document.body.classList.add('em-batalha');
+      $('msg').style.display = 'none'; this.msgAte = 0;
+      Input.limpar();
+      Trilha.iniciar();
+    });
   },
 
   falarComp() {

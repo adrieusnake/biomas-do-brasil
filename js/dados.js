@@ -151,7 +151,9 @@ const ITENS = {
   chimarrao: { nome: 'Chimarrão', cura: 10, usar: '* Você toma um chimarrão quentinho, bah! Recuperou 10 PV!' },
   butia:     { nome: 'Butiá',     cura: 10, usar: '* Você come butiás docinhos. Recuperou 10 PV!' },
   jucara:    { nome: 'Juçara',    cura: 10, usar: '* Você come polpa de juçara. Recuperou 10 PV!' },
-  pinhao:    { nome: 'Pinhão',    cura: 14, usar: '* Você come pinhões cozidos. Recuperou 14 PV!' }
+  pinhao:    { nome: 'Pinhão',    cura: 14, usar: '* Você come pinhões cozidos. Recuperou 14 PV!' },
+  // Item secreto (Trilha do Boto): zera a fúria de um chefe. Não cura.
+  cocar:     { nome: 'Cocar dos Guardiões ★', cura: 0, especial: 'chefe' }
 };
 
 const PISTAS = {
@@ -376,7 +378,8 @@ const MISSOES = {
         'O garimpo usa MERCÚRIO para separar o ouro. Esse veneno vai para o rio, entra nos peixes... e chega em quem come o peixe.',
         'O mercúrio faz muito mal à saúde, principalmente das crianças. Rio limpo é vida!'
       ], falasDepois: [
-        'Sem rio limpo, não tem peixe nem gente com saúde.'
+        'Sem rio limpo, não tem peixe nem gente com saúde.',
+        'E dizem que quem segue o BOTO-COR-DE-ROSA encontra uma trilha secreta no meio da mata... Mas isso é lenda, né?'
       ]},
       { id: 'a-placa3', area: 5, x: 3, y: 2, tipo: 'placa', sprite: 'placa', falas: [
         'A placa diz: "FAZENDA DO SEU DERRUBA. PROIBIDO ENTRAR."',
@@ -406,6 +409,7 @@ const MISSOES = {
       animal: 'peixeboi',
       furia: 130,
       voz: 0.55,
+      falaCocar: 'Tanta gente defendendo a floresta... Tá bom, tá bom! Eu desisto!',
       intro: '* SEU DERRUBA liga a motosserra! O filhote de peixe-boi está preso na água barrenta.',
       observar: [
         '* SEU DERRUBA: fazendeiro que desmata sem autorização e mantém um garimpo ilegal.',
@@ -564,6 +568,7 @@ const MISSOES = {
       ritmo: 1.15,          // ataques mais rápidos que nas outras fases
       danoExtra: 1,         // cada golpe tira 1 PV a mais
       duracao: 7,           // cada ataque dura mais
+      falaCocar: 'ALERTA: OPOSIÇÃO TOTAL DETECTADA... CANCELANDO DESTRUIÇÃO. BIP...',
       intro: '* DEVASTRON avança soltando fumaça! É o desafio final!',
       observar: [
         '* DEVASTRON: robô gigante que desmata, solta fumaça e despeja óleo nos rios.',

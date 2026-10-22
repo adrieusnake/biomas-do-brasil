@@ -244,6 +244,18 @@ function prepararSprites() {
   prepararCaatinga();
   prepararPampa();
   prepararMata();
+  // Cocar dos Guardiões (item da fase secreta)
+  SPR.cocar = Pixel.criar([
+    '.....r.y.b.g.r.....',
+    '...b.r.y.b.g.r.y...',
+    '..gb.ryybbggrr.yr..',
+    '.rgbbryybbggrryyrr.',
+    '.rggbbyybbggrryyrr.',
+    '..ggbbyybbggrryy...',
+    '...kkkkkkkkkkkkk...',
+    '...kwkwkwkwkwkwk...',
+    '...kkkkkkkkkkkkk...'
+  ], { r: '#d9302c', y: '#f2d23a', b: '#2a6ad5', g: '#3f9a3a', k: '#6b4a2a', w: '#f4ead8' }, 3);
 }
 
 // Floresta, fauna, personagens e o robô Devastron da Mata Atlântica.
