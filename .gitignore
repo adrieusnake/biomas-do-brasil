@@ -1,2 +1,5 @@
 # Pacote gerado para publicar em outros sites (itch.io, Netlify)
 *.zip
+
+# Configurações locais do editor
+.claude/

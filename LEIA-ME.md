@@ -1,6 +1,8 @@
-# Biomas do Brasil — protótipo v0.2
+# Biomas do Brasil
 
-Jogo educativo no estilo Undertale: explore 6 biomas, descubra pistas e resgate animais **sem machucar ninguém**.
+Jogo educativo no estilo Undertale: explore os 6 biomas do Brasil, descubra pistas e resgate animais **sem machucar ninguém**.
+
+🎮 **Jogue agora:** https://adrieusnake.github.io/biomas-do-brasil/
 
 ## Como rodar
 Abra a pasta com um servidor local (por exemplo `python servidor.py`, que evita o navegador usar arquivos antigos) e acesse `http://localhost:8765`.
@@ -8,6 +10,17 @@ Abra a pasta com um servidor local (por exemplo `python servidor.py`, que evita 
 ### No tablet
 Com o servidor rodando no PC, conecte o tablet na mesma rede Wi-Fi e abra `http://<IP-do-PC>:8765`.
 O modo toque liga sozinho. Para jogar em tela cheia: botão ⛶ (Android) ou "Adicionar à Tela de Início" (iPad).
+
+## Publicar uma nova versão
+O site é publicado pelo **GitHub Pages** a partir da branch `main`. Para atualizar:
+
+```bash
+git add -A
+git commit -m "Descreva a mudança"
+git push
+```
+
+Em 1 ou 2 minutos o site atualiza sozinho.
 
 ## Estrutura
 | Arquivo | O que tem |
@@ -22,5 +35,5 @@ O modo toque liga sozinho. Para jogar em tela cheia: botão ⛶ (Android) ou "Ad
 | `assets/` | PNGs do rascunho original (árvores, terreno, professor, jogador). |
 
 ## Como criar uma nova missão
-Copie o bloco `MISSOES[1]` (Cerrado) em `js/dados.js`, troque as entidades, as falas e a `batalha`, e remova `emBreve: true`.
+Copie o bloco `MISSOES[1]` (Cerrado) em `js/dados.js`, troque as entidades, as falas e a `batalha`, e inclua o bioma em `ORDEM_MISSOES`.
 Novos padrões de ataque entram em `PADROES` no `js/batalha.js`.
