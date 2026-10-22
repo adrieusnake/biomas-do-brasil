@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="theme-color" content="#101318">
+<link rel="manifest" href="manifest.json">
+<title>Biomas do Brasil</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+<div id="wrap">
+  <div id="tela">
+    <canvas id="game" width="768" height="432"></canvas>
+    <div id="info"></div>
+    <div id="botoesTopo">
+      <button id="mapBtn" title="Mapa (M)">🗺️</button>
+      <button id="somBtn" title="Ligar/desligar som">🔊</button>
+      <button id="telaCheiaBtn" title="Tela cheia">⛶</button>
+    </div>
+    <div id="msg"></div>
+
+    <div id="starterPanel" class="painel">
+      <h2>ESCOLHA SEU COMPANHEIRO</h2>
+      <p>Cada companheiro dá uma vantagem diferente nas batalhas.</p>
+      <div id="starterChoices" class="grade"></div>
+      <p class="nota">Seu personagem é mudo e responde apenas com gestos.</p>
+    </div>
+
+    <div id="mapPanel" class="painel">
+      <h2>MAPA DOS BIOMAS</h2>
+      <p>Escolha para onde viajar.</p>
+      <div id="mapChoices" class="grade"></div>
+      <button class="fechar" data-fecha="mapPanel">FECHAR</button>
+    </div>
+
+    <div id="dexPanel" class="painel">
+      <h2>BIOMADEX</h2>
+      <div id="dexCards" class="grade"></div>
+      <button class="fechar" data-fecha="dexPanel">FECHAR</button>
+      <button id="apagarBtn" class="perigo">APAGAR PROGRESSO</button>
+    </div>
+  </div>
+
+  <div id="mobileControls">
+    <div id="dpad" aria-label="Direcional">
+      <span class="seta" data-dir="up">▲</span>
+      <span class="seta" data-dir="left">◀</span>
+      <span class="seta" data-dir="right">▶</span>
+      <span class="seta" data-dir="down">▼</span>
+      <span class="miolo"></span>
+    </div>
+    <div id="botoesAcao">
+      <button class="ctrl" id="back">VOLTAR</button>
+      <button class="ctrl" id="action">AÇÃO</button>
+    </div>
+  </div>
+  <div id="girar">Dica: o jogo fica maior com o tablet deitado. ↻</div>
+  <p id="ajuda">Setas / WASD: andar &nbsp;•&nbsp; Z / Enter: ação &nbsp;•&nbsp; X / Esc: voltar &nbsp;•&nbsp; M: mapa</p>
+</div>
+
+<script src="js/som.js"></script>
+<script src="js/pixel.js"></script>
+<script src="js/dados.js"></script>
+<script src="js/dialogo.js"></script>
+<script src="js/mundo.js"></script>
+<script src="js/batalha.js"></script>
+<script src="js/jogo.js"></script>
+<script src="js/toque.js"></script>
+</body>
+</html>
