@@ -125,6 +125,20 @@ const FALAS_MATA = {
   onca:         ['Uma ONÇA-PINTADA! Na Mata Atlântica restam poucas.', '⚠ Aqui ela está CRITICAMENTE AMEAÇADA, porque a floresta virou pedacinhos.']
 };
 
+// Fichas bônus da Biomadex, liberadas nos minijogos secretos.
+const FICHAS_BONUS = {
+  jacare: {
+    titulo: '🐊 Jacaré-do-pantanal', bioma: 'PANTANAL • Ficha bônus',
+    fatos: [
+      'Réptil que vive nos rios, baías e corixos do Pantanal.',
+      'Consegue passar muito tempo debaixo d’água prendendo a respiração.',
+      'O sexo dos filhotes depende da temperatura do ninho!',
+      'Já foi muito caçado por causa do couro. Com a fiscalização, a população se recuperou.',
+      'É presa das onças-pintadas, que nadam muito bem.'
+    ]
+  }
+};
+
 const COMPANHEIROS = [
   { id: 'lobo',     nome: 'Lobo-guará',    emoji: '🐺', bonus: 'Semente veloz: você se move mais rápido nas batalhas.',
     falas: ['(O lobo-guará abana o rabo.)', 'Sabia? O lobo-guará é onívoro: come frutas, como a lobeira, e pequenos animais.'] },
@@ -945,7 +959,8 @@ const MISSOES = {
         'Esse vai e vem se chama PULSO DAS ÁGUAS. Na seca, os peixes se juntam nas baías e viram comida para o tuiuiú e outras aves.',
         'Mas seca demais, comprida demais, não é normal. Aí as baías somem e os bichos sofrem.'
       ], falasDepois: [
-        'Cheia e seca, uma depois da outra. É assim que o Pantanal respira!'
+        'Cheia e seca, uma depois da outra. É assim que o Pantanal respira!',
+        'Ah, e se você fizer amizade com um JACARÉ na beira d’água, quem sabe ele te leva para nadar até a baía dos jacarés...'
       ]},
       { id: 'p-placa2', area: 2, x: 4, y: 2, tipo: 'placa', sprite: 'placa', falas: [
         'ATENÇÃO: em 2020, uma seca muito forte e grandes incêndios queimaram cerca de um quarto do Pantanal.',

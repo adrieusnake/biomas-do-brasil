@@ -89,6 +89,7 @@ const Jogo = {
     }
     if (this.modo === 'batalha') { Batalha.atualizar(dt); return; }
     if (this.modo === 'trilha') { if (Dialogo.ativo) Dialogo.atualizar(dt); else Trilha.atualizar(dt); return; }
+    if (this.modo === 'rio') { Rio.atualizar(dt); return; }
     if (this.modo === 'final') {
       if (Input.bateu('ok') && agora - this.finalDesde > 1.5) { this.modo = 'mundo'; Som.ok(); document.body.classList.remove('em-batalha'); }
       return;
@@ -104,6 +105,7 @@ const Jogo = {
     else if (this.modo === 'transicao') this.desenharTransicao(t);
     else if (this.modo === 'final') this.desenharFinal(t);
     else if (this.modo === 'trilha') { Trilha.desenhar(t); Dialogo.desenhar(ctx, t); }
+    else if (this.modo === 'rio') Rio.desenhar(t);
     else {
       ctx.fillStyle = BIOMAS[Mundo.bioma].ceu; ctx.fillRect(0, 0, W, H);
       Mundo.desenhar(ctx, t);
@@ -161,6 +163,7 @@ const Jogo = {
     if (!e) {
       const bicho = Mundo.obstaculos.find(o => o.x === j.x + fx && o.y === j.y + fy && o.tipo === 'fauna');
       if (bicho && bicho.bicho === 'boto') { this.falarBoto(); return; }
+      if (bicho && bicho.bicho === 'jacare' && Mundo.bioma === 6) { this.falarJacare(); return; }
       const fala = Mundo.falaEm(j.x + fx, j.y + fy);
       if (fala) Dialogo.abrir(fala);
       return;
@@ -190,6 +193,26 @@ const Jogo = {
       '(O boto dá um salto e aponta o focinho para o rio... Parece querer que você o siga!)',
       { texto: 'Seguir o boto?', opcoes: ['Sim', 'Não'], aoEscolher: i => { if (i === 0) this.entrarTrilha(); } }
     ]);
+  },
+
+  // O jacaré do Pantanal convida para a corrida no rio.
+  falarJacare() {
+    Dialogo.abrir([
+      ...FALAS_PANTANAL.jacare,
+      '(O jacaré abre um olho, bate o rabo na água e aponta o focinho rio acima...)',
+      { texto: 'Nadar com o jacaré até a baía?', opcoes: ['Sim', 'Não'], aoEscolher: i => { if (i === 0) this.entrarRio(); } }
+    ]);
+  },
+
+  entrarRio() {
+    Som.alerta();
+    this.fade(() => {
+      this.modo = 'rio';
+      document.body.classList.add('em-batalha');
+      $('msg').style.display = 'none'; this.msgAte = 0;
+      Input.limpar();
+      Rio.iniciar();
+    });
   },
 
   entrarTrilha() {
@@ -422,6 +445,16 @@ const Jogo = {
       d.innerHTML = ok
         ? `<h3>${m.emoji} ${m.animal}</h3><div>${BIOMAS[i].nome} • ${m.ameaca}</div><ul>${m.ficha.map(f => `<li>${f}</li>`).join('')}</ul>`
         : `<h3>??? </h3><div>${BIOMAS[i].nome}</div><div style="color:#999">${m.emBreve ? 'Missão em breve' : 'Ainda não resgatado'}</div>`;
+      c.appendChild(d);
+    }
+    // Fichas bônus dos minijogos secretos (aparecem como "???" até serem liberadas)
+    for (const [id, f] of Object.entries(FICHAS_BONUS)) {
+      const ok = (Estado.fichasBonus || []).includes(id);
+      const d = document.createElement('div'); d.className = 'ficha' + (ok ? ' ok' : '');
+      const recorde = id === 'jacare' && Estado.recordeRio ? `<div style="color:#ffe14d">Seu recorde no rio: ${Rio.relogio(Estado.recordeRio)}</div>` : '';
+      d.innerHTML = ok
+        ? `<h3>${f.titulo}</h3><div>${f.bioma}</div><ul>${f.fatos.map(x => `<li>${x}</li>`).join('')}</ul>${recorde}`
+        : `<h3>??? Ficha secreta</h3><div style="color:#999">Alguém no Pantanal guarda um segredo...</div>`;
       c.appendChild(d);
     }
     this.abrirPainel('dexPanel');

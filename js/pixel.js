@@ -244,6 +244,20 @@ function prepararSprites() {
   prepararCaatinga();
   prepararPampa();
   prepararMata();
+  // Jacaré e onça vistos de cima (minijogo do rio). O rabo do jacaré balança em 2 quadros.
+  const corpoJacare = [
+    '....ddd....', '...ddddd...', '...dEdEd...', '...ddddd...', '....ddd....', '..d.ddd.d..', '.dd.ddd.dd.',
+    '...dkdkd...', '...ddddd...', '...dkdkd...', '...ddddd...', '.dd.ddd.dd.', '..d.ddd.d..', '....ddd....', '....dkd....'
+  ];
+  const corJacare = { d: '#6d6a3a', k: '#3a3820', E: '#ffd23f' };
+  SPR.jacareCima = [
+    Pixel.criar([...corpoJacare, '....dd.....', '...dd......', '...d.......'], corJacare, 2),
+    Pixel.criar([...corpoJacare, '.....dd....', '......dd...', '.......d...'], corJacare, 2)
+  ];
+  SPR.oncaCima = Pixel.criar([
+    '..o...o..', '.ooooooo.', '.okoooko.', '..ooRoo..', '..ooooo..', '.oKoooKo.',
+    '.ooKoKoo.', '..ooooo..', '..oKoKo..', '...ooo...', '....o....'
+  ], { o: '#e8a33a', k: '#1a1a1a', K: '#3a2410', R: '#d77a7a' }, 3);
   // Cocar dos Guardiões (item da fase secreta)
   SPR.cocar = Pixel.criar([
     '.....r.y.b.g.r.....',

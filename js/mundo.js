@@ -694,7 +694,8 @@ const Mundo = {
     margem.sort((a, b) => a.ordem - b.ordem);
     const tipos = ['tuiuiu', 'garca', 'jacare'];
     margem.slice(0, 2).forEach((p, i) => {
-      const bicho = tipos[Math.floor(this.rnd(p.x, p.y, 51 + i) * 3)];
+      // Na área 2 do Pantanal sempre há um jacaré (é ele quem leva ao minijogo do rio).
+      const bicho = this.area === 1 && i === 0 ? 'jacare' : tipos[Math.floor(this.rnd(p.x, p.y, 51 + i) * 3)];
       this.obstaculos.push({ tipo: 'fauna', bicho, x: p.x, y: p.y, esq: p.esq, fala: bicho });
     });
   },

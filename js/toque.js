@@ -48,6 +48,12 @@ const Toque = {
     const { x, y } = this.noCanvas(e);
     if (Jogo.modo === 'batalha') { Batalha.toque(x, y, tipo); return; }
     if (Jogo.modo === 'final') { if (tipo === 'down') Input.pulso('ok'); return; }
+    if (Jogo.modo === 'rio') {
+      // Arrastar o dedo guia o jacaré; tocar também confirma os painéis
+      Rio.toque(x, tipo);
+      if (tipo === 'down' && Rio.estado !== 'nadando') Input.pulso('ok');
+      return;
+    }
     if (Jogo.modo === 'trilha') {
       if (tipo !== 'down') return;
       if (Dialogo.ativo) Dialogo.toque(x, y); else Input.pulso('ok');   // tocar na tela = pular

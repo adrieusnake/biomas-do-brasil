@@ -31,6 +31,7 @@ Em 1 ou 2 minutos o site atualiza sozinho.
 | `js/dialogo.js` | Caixa de diálogo com texto letra a letra. |
 | `js/jogo.js` | Estado, controles, painéis (mapa, companheiros, Biomadex), salvamento. |
 | `js/trilha.js` | Fase secreta "Trilha do Boto" (estilo Pitfall): entre falando com um boto na Amazônia. O mapa da corrida fica em `TRILHA_MAPA`. |
+| `js/rio.js` | Minijogo secreto "Corrida do Jacaré" (estilo River Raid): entre falando com o jacaré do Pantanal. Libera a ficha bônus e guarda o recorde. |
 | `js/toque.js` | Modo tablet: layout em tela cheia, direcional deslizante, tocar para andar, toques na batalha, tela cheia. |
 | `js/pixel.js` | Sprites provisórios desenhados em código (NPCs, Fumaréu, lobo-guará...) e os 6 companheiros (`COMP_MAPAS`, 2 quadros de caminhada cada). |
 | `assets/` | PNGs do rascunho original (árvores, terreno, professor, jogador). |
