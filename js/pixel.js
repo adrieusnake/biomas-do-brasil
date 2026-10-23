@@ -229,6 +229,7 @@ function prepararSprites() {
   const corLobo = { o: '#d9772b', d: '#b85c1e', k: '#1d1410', w: '#f3e6c9' };
   SPR.lobo = Pixel.criar(MAPAS.lobo, corLobo, 3);
   SPR.loboEsq = Pixel.criar(Pixel.espelhar(MAPAS.lobo), corLobo, 3);
+  SPR.loboMini = [Pixel.criar(MAPAS.lobo, corLobo, 2), Pixel.criar(Pixel.espelhar(MAPAS.lobo), corLobo, 2)];
   const corFogo = { r: '#c2261b', o: '#ff7a1a', y: '#ffd23f', w: '#fff', k: '#2b0d06' };
   SPR.fumareu = Pixel.criar(MAPAS.fumareu, corFogo, 6);
   SPR.fumareuMundo = Pixel.criar(MAPAS.fumareu, corFogo, 3);
@@ -258,6 +259,25 @@ function prepararSprites() {
     '..o...o..', '.ooooooo.', '.okoooko.', '..ooRoo..', '..ooooo..', '.oKoooKo.',
     '.ooKoKoo.', '..ooooo..', '..oKoKo..', '...ooo...', '....o....'
   ], { o: '#e8a33a', k: '#1a1a1a', K: '#3a2410', R: '#d77a7a' }, 3);
+  // Fauna do Cerrado (com curiosidades no mapa)
+  const ambosC = (mapa, paleta) => [Pixel.criar(mapa, paleta, 3), Pixel.criar(Pixel.espelhar(mapa), paleta, 3)];
+  Object.assign(SPR.fauna, {
+    lobo: [SPR.lobo, SPR.loboEsq],
+    seriema: ambosC([
+      '....g.g...', '...gggg...', '..gggkgr..', '...ggg.rr.', '...gg.....', '...gg.....', '..gggg....',
+      '.ggGgGgg..', 'gggGgGggg.', '.ggggggg..', '...r..r...', '...r..r...', '...r..r...', '..rr.rr...'
+    ], { g: '#a89c88', G: '#8a7e6a', k: '#1a1a1a', r: '#d9603a' }),
+    tamandua: ambosC([
+      '..............kk...', 'ttt..........gggk..', 'tttt.....ggggggggkk', 'tttttgggggwwkkgg...',
+      '.tttggggwwkkkgg....', '..ttgggwkkkggg.....', '....ggggggggg......', '....kk.kk..kk.kk...'
+    ], { t: '#5a4a3a', g: '#8a7a68', w: '#f0e8d8', k: '#1a1a1a' }),
+    arara: ambosC([
+      '...bbb...', '..bwkbk..', '..bbbkk..', '.bbbbb...', 'bbyyyy...', 'bbyyyy...', '.byyyy...', '..bbb....', '..bb.....', '..b......', '.bb......'
+    ], { b: '#2a7ad5', y: '#f2c230', w: '#f4f4f0', k: '#1a1a1a' }),
+    tatu: ambosC([
+      '....AaAaAaA.....', '..AaAaAaAaAaAa..', '.AaAaAaAaAaAaAahh', 'AaAaAaAaAaAaAahhk', '.ff....ff...ff...'
+    ], { A: '#a89070', a: '#7a6448', h: '#c8b090', k: '#1a1a1a', f: '#5a4a3a' })
+  });
   // Cocar dos Guardiões (item da fase secreta)
   SPR.cocar = Pixel.criar([
     '.....r.y.b.g.r.....',

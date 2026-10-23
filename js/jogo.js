@@ -90,6 +90,7 @@ const Jogo = {
     if (this.modo === 'batalha') { Batalha.atualizar(dt); return; }
     if (this.modo === 'trilha') { if (Dialogo.ativo) Dialogo.atualizar(dt); else Trilha.atualizar(dt); return; }
     if (this.modo === 'rio') { Rio.atualizar(dt); return; }
+    if (this.modo === 'travessia') { Travessia.atualizar(dt); return; }
     if (this.modo === 'final') {
       if (Input.bateu('ok') && agora - this.finalDesde > 1.5) { this.modo = 'mundo'; Som.ok(); document.body.classList.remove('em-batalha'); }
       return;
@@ -106,6 +107,7 @@ const Jogo = {
     else if (this.modo === 'final') this.desenharFinal(t);
     else if (this.modo === 'trilha') { Trilha.desenhar(t); Dialogo.desenhar(ctx, t); }
     else if (this.modo === 'rio') Rio.desenhar(t);
+    else if (this.modo === 'travessia') { ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H); Travessia.desenhar(t); }
     else {
       ctx.fillStyle = BIOMAS[Mundo.bioma].ceu; ctx.fillRect(0, 0, W, H);
       Mundo.desenhar(ctx, t);
@@ -164,6 +166,7 @@ const Jogo = {
       const bicho = Mundo.obstaculos.find(o => o.x === j.x + fx && o.y === j.y + fy && o.tipo === 'fauna');
       if (bicho && bicho.bicho === 'boto') { this.falarBoto(); return; }
       if (bicho && bicho.bicho === 'jacare' && Mundo.bioma === 6) { this.falarJacare(); return; }
+      if (bicho && bicho.bicho === 'lobo' && Mundo.bioma === 1) { this.falarLobo(); return; }
       const fala = Mundo.falaEm(j.x + fx, j.y + fy);
       if (fala) Dialogo.abrir(fala);
       return;
@@ -202,6 +205,26 @@ const Jogo = {
       '(O jacaré abre um olho, bate o rabo na água e aponta o focinho rio acima...)',
       { texto: 'Nadar com o jacaré até a baía?', opcoes: ['Sim', 'Não'], aoEscolher: i => { if (i === 0) this.entrarRio(); } }
     ]);
+  },
+
+  // O lobo-guará da beira da estrada pede ajuda para atravessar.
+  falarLobo() {
+    Dialogo.abrir([
+      'Um LOBO-GUARÁ selvagem! Ele olha para a estrada... e para as lobeiras do outro lado.',
+      '(O lobo dá uns passos, recua quando passa um caminhão e olha para você, como se pedisse ajuda.)',
+      { texto: 'Ajudar o lobo a atravessar a estrada?', opcoes: ['Sim', 'Não'], aoEscolher: i => { if (i === 0) this.entrarTravessia(); } }
+    ]);
+  },
+
+  entrarTravessia() {
+    Som.alerta();
+    this.fade(() => {
+      this.modo = 'travessia';
+      document.body.classList.add('em-batalha');
+      $('msg').style.display = 'none'; this.msgAte = 0;
+      Input.limpar();
+      Travessia.iniciar();
+    });
   },
 
   entrarRio() {
@@ -451,10 +474,10 @@ const Jogo = {
     for (const [id, f] of Object.entries(FICHAS_BONUS)) {
       const ok = (Estado.fichasBonus || []).includes(id);
       const d = document.createElement('div'); d.className = 'ficha' + (ok ? ' ok' : '');
-      const recorde = id === 'jacare' && Estado.recordeRio ? `<div style="color:#ffe14d">Seu recorde no rio: ${Rio.relogio(Estado.recordeRio)}</div>` : '';
+      const recorde = f.recorde && Estado[f.recorde] ? `<div style="color:#ffe14d">${f.rotulo}: ${Rio.relogio(Estado[f.recorde])}</div>` : '';
       d.innerHTML = ok
         ? `<h3>${f.titulo}</h3><div>${f.bioma}</div><ul>${f.fatos.map(x => `<li>${x}</li>`).join('')}</ul>${recorde}`
-        : `<h3>??? Ficha secreta</h3><div style="color:#999">Alguém no Pantanal guarda um segredo...</div>`;
+        : `<h3>??? Ficha secreta</h3><div style="color:#999">${f.dica}</div>`;
       c.appendChild(d);
     }
     this.abrirPainel('dexPanel');

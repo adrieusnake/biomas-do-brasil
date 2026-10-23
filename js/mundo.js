@@ -35,7 +35,7 @@ const AGUA = {
 };
 
 // Curiosidades da paisagem por bioma.
-const FALAS_PAISAGEM = () => ({ 2: FALAS_AMAZONIA, 3: FALAS_MATA, 4: FALAS_PAMPA, 5: FALAS_CAATINGA, 6: FALAS_PANTANAL });
+const FALAS_PAISAGEM = () => ({ 1: FALAS_CERRADO, 2: FALAS_AMAZONIA, 3: FALAS_MATA, 4: FALAS_PAMPA, 5: FALAS_CAATINGA, 6: FALAS_PANTANAL });
 
 const Mundo = {
   bioma: 0, area: 0,
@@ -145,6 +145,7 @@ const Mundo = {
       }
     }
     if (VEGETACAO[this.bioma] && VEGETACAO[this.bioma].pantanal && !this.baiaSeca) this.gerarFauna();
+    if (this.bioma === 1) this.gerarFaunaCerrado();
     for (const o of this.obstaculos) this.solidos.add(o.x + ',' + o.y);
     for (const k of this.agua) if (!this.pontes.has(k)) this.solidos.add(k);
     for (const k of this.rochas) this.solidos.add(k);
@@ -409,6 +410,30 @@ const Mundo = {
     }
     ctx.fillStyle = '#c0392b'; ctx.fillRect(cx + 4, topo - 4, 22, 8);
     ctx.fillStyle = '#555'; ctx.beginPath(); ctx.arc(cx, topo, 4, 0, Math.PI * 2); ctx.fill();
+  },
+
+  // ---------- Cerrado ----------
+  // Fauna com curiosidades. Na área central sempre há um lobo-guará na beira da estrada:
+  // é ele quem leva ao minijogo "Travessia do Lobo".
+  gerarFaunaCerrado() {
+    const m = MISSOES[1];
+    if (this.area === m.areaEncontro && !Estado.poupados.includes(m.id)) return;   // área do incêndio
+    const ents = this.todasEntidades();
+    const ocupado = new Set(this.obstaculos.map(o => o.x + ',' + o.y));
+    const livre = (x, y) => {
+      if (x < 1 || y < 1 || x > COLS - 2 || y > ROWS - 2 || x === CENTRO_X || y === CENTRO_Y || ocupado.has(x + ',' + y)) return false;
+      // Longe das entidades e fora do caminho delas até a trilha
+      return !ents.some(e => (Math.abs(e.x - x) <= 1 && Math.abs(e.y - y) <= 1) ||
+        (e.x === x && (y - e.y) * (CENTRO_Y - e.y) >= 0 && Math.abs(y - e.y) <= Math.abs(CENTRO_Y - e.y)));
+    };
+    const livres = [];
+    for (let y = 1; y < ROWS - 1; y++) for (let x = 1; x < COLS - 1; x++) if (livre(x, y)) livres.push({ x, y });
+    livres.sort((a, b) => this.rnd(a.x, a.y, 900) - this.rnd(b.x, b.y, 900));
+    const add = (bicho, p) => { if (p) { this.obstaculos.push({ tipo: 'fauna', bicho, x: p.x, y: p.y, esq: this.rnd(p.x, p.y, 901) < 0.5, fala: bicho }); ocupado.add(p.x + ',' + p.y); } };
+    if (this.area === 1) add('lobo', livres.find(p => p.y >= 5) || livres[0]);
+    const especies = ['seriema', 'tamandua', 'arara', 'tatu'];
+    const quantos = 1 + (this.rnd(2, 2, 902) < 0.5 ? 1 : 0);
+    for (let i = 0; i < quantos; i++) add(especies[Math.floor(this.rnd(i, 3, 903) * especies.length)], livres.find(p => !ocupado.has(p.x + ',' + p.y)));
   },
 
   // ---------- Caatinga ----------

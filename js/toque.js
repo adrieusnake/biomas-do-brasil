@@ -48,6 +48,7 @@ const Toque = {
     const { x, y } = this.noCanvas(e);
     if (Jogo.modo === 'batalha') { Batalha.toque(x, y, tipo); return; }
     if (Jogo.modo === 'final') { if (tipo === 'down') Input.pulso('ok'); return; }
+    if (Jogo.modo === 'travessia') { if (tipo === 'down') Travessia.toque(x, y); return; }
     if (Jogo.modo === 'rio') {
       // Arrastar o dedo guia o jacaré; tocar também confirma os painéis
       Rio.toque(x, tipo);

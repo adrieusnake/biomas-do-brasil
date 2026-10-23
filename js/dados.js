@@ -125,9 +125,30 @@ const FALAS_MATA = {
   onca:         ['Uma ONÇA-PINTADA! Na Mata Atlântica restam poucas.', '⚠ Aqui ela está CRITICAMENTE AMEAÇADA, porque a floresta virou pedacinhos.']
 };
 
+// Curiosidades ao interagir com a fauna do Cerrado.
+const FALAS_CERRADO = {
+  seriema:  ['Uma SERIEMA! Seu canto alto é um dos sons mais famosos do Cerrado.', 'Ela corre muito e caça cobras, lagartos e insetos.'],
+  tamandua: ['Um TAMANDUÁ-BANDEIRA! Ele não tem dentes e usa uma língua comprida para comer cupins e formigas.', 'Ele come só um pouco de cada cupinzeiro e segue em frente, para a comida nunca acabar.', '⚠ É VULNERÁVEL À EXTINÇÃO: sofre com queimadas e atropelamentos.'],
+  arara:    ['Uma ARARA-CANINDÉ, azul e amarela!', 'Os casais ficam juntos por muitos anos e fazem ninho nos troncos ocos dos buritis.'],
+  tatu:     ['Um TATU-CANASTRA, o maior tatu do mundo!', '⚠ É VULNERÁVEL À EXTINÇÃO. As tocas que ele cava viram abrigo para muitos outros animais.'],
+  lobo:     ['Um LOBO-GUARÁ selvagem!']
+};
+
 // Fichas bônus da Biomadex, liberadas nos minijogos secretos.
 const FICHAS_BONUS = {
+  passagens: {
+    titulo: '🚧 Passagens de fauna', bioma: 'CERRADO • Ficha bônus', recorde: 'recordeLobo', rotulo: 'Seu recorde na travessia',
+    dica: 'Um lobo no Cerrado precisa de ajuda para atravessar...',
+    fatos: [
+      'Estradas cortam o caminho dos animais, que precisam atravessá-las para encontrar comida e parceiros.',
+      'Milhões de animais silvestres morrem atropelados todos os anos nas estradas do Brasil.',
+      'PASSAGENS DE FAUNA são túneis ou pontes, com cercas que guiam os bichos até elas.',
+      'Redutores de velocidade e placas de "animais na pista" também salvam vidas.',
+      'Numa viagem de carro, peça para ir devagar em estradas perto de matas, principalmente à noite!'
+    ]
+  },
   jacare: {
+    recorde: 'recordeRio', rotulo: 'Seu recorde no rio', dica: 'Alguém no Pantanal guarda um segredo...',
     titulo: '🐊 Jacaré-do-pantanal', bioma: 'PANTANAL • Ficha bônus',
     fatos: [
       'Réptil que vive nos rios, baías e corixos do Pantanal.',
@@ -258,7 +279,8 @@ const MISSOES = {
         'Ele come a fruta e espalha as sementes por aí. Sem perceber, o lobo planta o Cerrado!',
         'Ele é tímido e não ataca gente. Se encontrar um, fale baixinho e mantenha distância.'
       ], falasDepois: [
-        'O lobo-guará é o jardineiro do Cerrado!'
+        'O lobo-guará é o jardineiro do Cerrado!',
+        'Outro dia vi um lobo-guará parado na beira da estrada, sem coragem de atravessar. Coitado, aquilo é perigoso...'
       ]},
       { id: 'c-fumareu', area: 5, x: 10, y: 3, tipo: 'encontro', sprite: 'fumareuMundo' },
       { id: 'c-lobo', area: 5, x: 12, y: 5, tipo: 'animal', sprite: 'lobo',
